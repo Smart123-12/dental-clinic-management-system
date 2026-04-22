@@ -18,9 +18,18 @@
   </a>
 </div>
 
----
+## 🔐 Demo Login Credentials
 
-## 🌟 Features
+> ✅ These users are **auto-created** when the server starts for the first time on an empty database. No manual setup needed!
+
+| Role | Email | Password |
+|------|-------|----------|
+| 🛡️ **Admin** | `admin@dentalcare.com` | `Admin@123` |
+| 🩺 **Doctor 1** (Orthodontist) | `doctor@dentalcare.com` | `Doctor@123` |
+| 🩺 **Doctor 2** (Endodontist) | `doctor2@dentalcare.com` | `Doctor@123` |
+| 👤 **Patient** | `patient@dentalcare.com` | `Patient@123` |
+
+
 
 ### 👤 Patient (Customer)
 - Signup / Login
