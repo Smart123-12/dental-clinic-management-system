@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: dental-clinic-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://dentaladmin:DentalCare2025@dental-clinic.qkozx5b.mongodb.net/dental-clinic?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        value: DentalCare@Secret123
+      - key: NODE_ENV
+        value: production
