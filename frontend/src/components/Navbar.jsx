@@ -1,9 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Activity } from 'lucide-react';
+import { Menu, Activity, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar({ onMenuClick }) {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -12,39 +12,61 @@ export default function Navbar() {
     window.location.reload();
   };
 
+  const roleLabel = {
+    admin: '🛡️ Admin',
+    doctor: '🩺 Doctor',
+    customer: '👤 Patient',
+  };
+
+  const roleBadgeColor = {
+    admin: 'bg-violet-100 text-violet-700',
+    doctor: 'bg-emerald-100 text-emerald-700',
+    customer: 'bg-blue-100 text-blue-700',
+  };
+
   return (
-    <nav className="bg-white shadow-sm border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          <Link to="/" className="flex items-center gap-2 text-blue-600">
-            <Activity size={24} className="text-blue-600" />
-            <span className="font-bold text-xl tracking-tight text-slate-900">DentalCare</span>
-          </Link>
-          
-          <div className="flex items-center gap-4">
-            {user ? (
-              <>
-                <span className="text-sm text-slate-600 hidden sm:inline-block">Welcome, {user.name}</span>
-                <button 
-                  onClick={handleLogout}
-                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="text-slate-600 hover:text-slate-900 font-medium text-sm">
-                  Login
-                </Link>
-                <Link to="/signup" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm">
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
+    <header className="bg-white border-b border-slate-200 shadow-sm h-16 flex items-center px-4 gap-4 flex-shrink-0">
+      {/* Mobile menu toggle */}
+      <button
+        onClick={onMenuClick}
+        className="lg:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"
+        aria-label="Open menu"
+      >
+        <Menu size={22} />
+      </button>
+
+      {/* Logo — shown on mobile only (sidebar hides on desktop) */}
+      <div className="flex items-center gap-2 lg:hidden">
+        <Activity size={20} className="text-blue-600" />
+        <span className="font-bold text-slate-900">DentalCare</span>
       </div>
-    </nav>
+
+      <div className="flex-1" />
+
+      {/* Role Badge */}
+      {user && (
+        <span className={`hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${roleBadgeColor[user.role]}`}>
+          {roleLabel[user.role]}
+        </span>
+      )}
+
+      {/* User name */}
+      {user && (
+        <span className="text-sm text-slate-600 hidden sm:inline">
+          {user.name}
+        </span>
+      )}
+
+      {/* Logout */}
+      {user && (
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+        >
+          <LogOut size={16} />
+          <span className="hidden sm:inline">Logout</span>
+        </button>
+      )}
+    </header>
   );
 }
