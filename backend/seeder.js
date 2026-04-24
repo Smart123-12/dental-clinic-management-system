@@ -6,11 +6,15 @@ const Appointment = require('./models/Appointment');
 
 const seedDemoData = async () => {
   try {
-    const userCount = await User.countDocuments();
-    if (userCount > 0) {
+    const newAdmin = await User.findOne({ email: 'admin@test.com' });
+    if (newAdmin) {
       console.log('✅ Demo data already exists — skipping seed.');
       return;
     }
+
+    console.log('🌱 Forcing seed for new demo credentials... cleaning up old ones');
+    await User.deleteMany({ email: { $in: ['admin@dentalcare.com', 'doctor@dentalcare.com', 'doctor2@dentalcare.com', 'patient@dentalcare.com'] } });
+
 
     console.log('🌱 Seeding demo data...');
 
