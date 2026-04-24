@@ -17,15 +17,15 @@ const seedDemoData = async () => {
     // Create Demo Users
     const admin = await User.create({
       name: 'Admin User',
-      email: 'admin@dentalcare.com',
-      password: 'Admin@123',
+      email: 'admin@test.com',
+      password: '123456',
       role: 'admin',
     });
 
     const doctor1 = await User.create({
       name: 'Dr. Priya Sharma',
-      email: 'doctor@dentalcare.com',
-      password: 'Doctor@123',
+      email: 'doctor@test.com',
+      password: '123456',
       role: 'doctor',
       specialization: 'Orthodontist',
       chargePerVisit: 1500,
@@ -34,8 +34,8 @@ const seedDemoData = async () => {
 
     const doctor2 = await User.create({
       name: 'Dr. Rohan Mehta',
-      email: 'doctor2@dentalcare.com',
-      password: 'Doctor@123',
+      email: 'doctor2@test.com',
+      password: '123456',
       role: 'doctor',
       specialization: 'Endodontist',
       chargePerVisit: 2000,
@@ -44,8 +44,8 @@ const seedDemoData = async () => {
 
     const patient = await User.create({
       name: 'Raj Patel',
-      email: 'patient@dentalcare.com',
-      password: 'Patient@123',
+      email: 'customer@test.com',
+      password: '123456',
       role: 'customer',
     });
 
@@ -84,9 +84,9 @@ const seedDemoData = async () => {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('📋 DEMO LOGIN CREDENTIALS:');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('🛡️  Admin    → admin@dentalcare.com   / Admin@123');
-    console.log('🩺  Doctor   → doctor@dentalcare.com  / Doctor@123');
-    console.log('👤  Patient  → patient@dentalcare.com / Patient@123');
+    console.log('🛡️  Admin    → admin@test.com   / 123456');
+    console.log('🩺  Doctor   → doctor@test.com  / 123456');
+    console.log('👤  Patient  → customer@test.com / 123456');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   } catch (error) {
     console.error('❌ Error seeding data:', error.message);

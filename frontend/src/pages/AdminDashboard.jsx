@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 import {
   Users, Activity, DollarSign, Calendar,
-  Plus, Trash2, X, UserCheck, UserX, Stethoscope, ShieldCheck
+  Plus, Trash2, X, UserCheck, UserX, Stethoscope, ShieldCheck,
+  FileText, Box
 } from 'lucide-react';
 
 const ROLES = ['customer', 'doctor', 'admin'];
@@ -110,6 +111,8 @@ export default function AdminDashboard() {
     { id: 'overview', label: 'Overview', icon: Activity },
     { id: 'users', label: 'Users', icon: Users },
     { id: 'appointments', label: 'Appointments', icon: Calendar },
+    { id: 'reports', label: 'Reports & Billing', icon: FileText },
+    { id: 'inventory', label: 'Inventory', icon: Box },
   ];
 
   return (
@@ -324,6 +327,34 @@ export default function AdminDashboard() {
               </tbody>
             </table>
           </div>
+        </div>
+      )}
+
+      {/* ──── REPORTS & BILLING ──── */}
+      {tab === 'reports' && (
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8 text-center">
+          <div className="mx-auto w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-4">
+            <FileText size={32} />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Reports & Billing Module</h2>
+          <p className="text-slate-500 max-w-md mx-auto">
+            This module provides comprehensive financial reports, invoice generation, and revenue analytics. 
+            Currently in development. Total revenue recorded to date: <strong className="text-slate-800">₹{totalRevenue.toLocaleString()}</strong>.
+          </p>
+        </div>
+      )}
+
+      {/* ──── INVENTORY CONTROL ──── */}
+      {tab === 'inventory' && (
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8 text-center">
+          <div className="mx-auto w-16 h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mb-4">
+            <Box size={32} />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Inventory Control System</h2>
+          <p className="text-slate-500 max-w-md mx-auto">
+            Manage dental supplies, tools, and medications. Setup alerts for low stock and track vendor orders.
+            Currently in development.
+          </p>
         </div>
       )}
 

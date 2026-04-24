@@ -79,6 +79,8 @@ router.put('/:id/status', protect, doctorOrAdmin, async (req, res) => {
     if (treatmentPlan) appointment.treatmentPlan = treatmentPlan;
     if (charges !== undefined) appointment.charges = charges;
     if (notes) appointment.notes = notes;
+    if (req.body.date) appointment.date = req.body.date;
+    if (req.body.timeSlot) appointment.timeSlot = req.body.timeSlot;
 
     const updatedAppointment = await appointment.save();
     res.json(updatedAppointment);
