@@ -207,6 +207,42 @@ export default function Login() {
                 </span>
               ) : 'Sign In →'}
             </button>
+
+            <div className="relative mt-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-slate-500">Or continue with</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={async () => {
+                setError('');
+                setLoading(true);
+                try {
+                  const { data } = await api.post('/auth/opencode', {
+                    providerToken: 'demo-opencode-token',
+                    email: 'opencode@dentalcare.com',
+                    name: 'Opencode User',
+                    role: 'customer'
+                  });
+                  localStorage.setItem('token', data.token);
+                  localStorage.setItem('user', JSON.stringify(data));
+                  window.location.href = `/${data.role}`;
+                } catch (err) {
+                  setError('Opencode Auth failed');
+                  setLoading(false);
+                }
+              }}
+              disabled={loading}
+              className="w-full flex justify-center items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl transition-colors shadow-sm disabled:opacity-70"
+            >
+              <Activity size={18} />
+              Login with Opencode Auth
+            </button>
           </form>
 
           <div className="mt-6 pt-6 border-t border-slate-100 text-center">
