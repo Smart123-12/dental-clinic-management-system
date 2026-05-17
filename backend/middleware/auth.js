@@ -8,7 +8,8 @@ const protect = async (req, res, next) => {
     try {
       token = req.headers.authorization.split(' ')[1];
       if (!process.env.JWT_SECRET) {
-        return res.status(500).json({ message: 'Server authentication misconfiguration' });
+        console.error('JWT_SECRET is missing in environment configuration');
+        return res.status(500).json({ message: 'Authentication failed' });
       }
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
