@@ -8,8 +8,8 @@ services:
     plan: free
     envVars:
       - key: MONGO_URI
-        value: mongodb+srv://dentaladmin:DentalCare2025@dental-clinic.qkozx5b.mongodb.net/dental-clinic?retryWrites=true&w=majority
+        sync: false
       - key: JWT_SECRET
-        value: DentalCare@Secret123
+        sync: false
       - key: NODE_ENV
         value: production
