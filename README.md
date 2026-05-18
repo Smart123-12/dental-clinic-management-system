@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" />
   <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
-  <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" />
+  <img src="https://img.shields.io/badge/GitHub_Pages-222222?style=for-the-badge&logo=github&logoColor=white" />
 </div>
 
 <br/>
@@ -13,8 +13,8 @@
   <h1>🦷 DentalCare - Clinic Management System</h1>
   <p><b>A full-stack, responsive web application to manage a dental clinic — patients, doctors, appointments, and billing — all in one place.</b></p>
 
-  <a href="https://starlit-sherbet-cb1415.netlify.app" target="_blank">
-    <img src="https://img.shields.io/badge/🚀 Live Demo-Netlify-00C7B7?style=for-the-badge" />
+  <a href="https://smart123-12.github.io/dental-clinic-management-system/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_Live_Demo-GitHub_Pages-222222?style=for-the-badge" />
   </a>
 </div>
 
@@ -59,14 +59,14 @@
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB Atlas (Free Tier) |
 | **Auth** | JWT (JSON Web Tokens) + bcryptjs |
-| **Frontend Hosting** | Netlify |
+| **Frontend Hosting** | GitHub Pages (via GitHub Actions) |
 | **Backend Hosting** | Render (Free Tier) |
 
 ---
 
 ## 🚀 Live Deployment
 
-> 🌐 **Frontend**: [https://starlit-sherbet-cb1415.netlify.app](https://starlit-sherbet-cb1415.netlify.app)
+> 🌐 **Frontend**: [https://Smart123-12.github.io/dental-clinic-management-system/](https://Smart123-12.github.io/dental-clinic-management-system/)
 
 ---
 
@@ -169,12 +169,8 @@ npm run dev
    - `MONGO_URI` → MongoDB Atlas URI
    - `JWT_SECRET` → any secret string
 
-### Frontend → Netlify (Free)
-Already deployed! To re-deploy:
-```bash
-cd frontend
-netlify deploy --prod --dir=dist
-```
+### Frontend → GitHub Pages
+The frontend is automatically deployed to GitHub Pages via GitHub Actions whenever changes are pushed to the `main` branch.
 
 ---
 
