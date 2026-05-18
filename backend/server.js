@@ -11,6 +11,7 @@ const app = express();
 // ── CORS ──
 const allowedOrigins = [
   'https://starlit-sherbet-cb1415.netlify.app',  // Netlify
+  'https://smart123-12.github.io', // GitHub Pages
   'http://localhost:5173',
   'http://localhost:3000',
   'http://localhost:4173',
