@@ -32,7 +32,7 @@ function App() {
   const user = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={!user ? <Login /> : <Navigate to={`/${user.role}`} />} />
