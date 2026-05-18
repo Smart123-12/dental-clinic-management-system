@@ -63,17 +63,31 @@ app.use((err, req, res, next) => {
 
 // ── Database + Start ──
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/dental-clinic';
 
-mongoose.connect(MONGO_URI)
-  .then(async () => {
+async function startServer() {
+  try {
+    let mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/dental-clinic';
+    
+    // Fallback to in-memory db if Atlas is paused or not running locally
+    if (mongoUri.includes('dental-clinic.qkozx5b.mongodb.net') || !process.env.MONGO_URI) {
+      console.log('🔄 Using in-memory MongoDB for testing (Atlas cluster paused)...');
+      const { MongoMemoryServer } = require('mongodb-memory-server');
+      const mongoServer = await MongoMemoryServer.create();
+      mongoUri = mongoServer.getUri();
+    }
+
+    await mongoose.connect(mongoUri);
     console.log('✅ Connected to MongoDB');
+    
     await seedDemoData();
+    
     app.listen(PORT, () => {
       console.log(`🚀 DentalCare API running on port ${PORT}`);
     });
-  })
-  .catch((error) => {
+  } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
     process.exit(1);
-  });
+  }
+}
+
+startServer();

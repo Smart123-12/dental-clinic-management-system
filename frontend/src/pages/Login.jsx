@@ -91,29 +91,29 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-100 via-blue-50 to-teal-100 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl grid lg:grid-cols-2 gap-6 items-start">
 
         {/* Left — Branding + Demo Cards */}
         <div className="space-y-6">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="bg-blue-600 p-3 rounded-2xl">
+            <div className="bg-blue-600 p-3 rounded-2xl shadow-md">
               <Activity size={28} className="text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">DentalCare</h1>
-              <p className="text-blue-300 text-sm">Clinic Management System</p>
+              <h1 className="text-2xl font-bold text-slate-900">DentalCare</h1>
+              <p className="text-blue-600 text-sm font-medium">Clinic Management System</p>
             </div>
           </div>
 
-          <p className="text-slate-400 text-sm leading-relaxed">
+          <p className="text-slate-600 text-sm leading-relaxed">
             A complete solution to manage your dental clinic — appointments, doctors, patients, and revenue tracking.
           </p>
 
           {/* Demo Credentials */}
           <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
               🚀 Quick Login — Click any role to sign in instantly
             </p>
             <div className="space-y-3">
@@ -125,18 +125,18 @@ export default function Login() {
                     type="button"
                     onClick={() => fillAndLogin(dEmail, dPass)}
                     disabled={loading}
-                    className={`w-full flex items-center gap-4 p-4 bg-white/5 border rounded-xl text-left transition-all group disabled:opacity-60 ${c.card}`}
+                    className={`w-full flex items-center gap-4 p-4 bg-white/70 shadow-sm border rounded-xl text-left transition-all group disabled:opacity-60 ${c.card}`}
                   >
                     <div className={`p-2.5 rounded-xl ${c.icon} flex-shrink-0`}>
                       <Icon size={20} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <span className="font-semibold text-white text-sm">{role}</span>
+                        <span className="font-semibold text-slate-800 text-sm">{role}</span>
                         <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${c.badge}`}>{role}</span>
                       </div>
-                      <p className="text-xs text-slate-400 truncate">{dEmail}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
+                      <p className="text-xs text-slate-500 truncate">{dEmail}</p>
+                      <p className="text-xs text-slate-400 mt-0.5">{desc}</p>
                     </div>
                     <div className={`text-xs font-mono ${c.btn} hidden sm:block flex-shrink-0`}>
                       {dPass}

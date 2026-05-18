@@ -39,37 +39,37 @@ export default function Signup() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-100 via-blue-50 to-teal-100 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl grid lg:grid-cols-2 gap-6 items-center">
 
         {/* Left branding */}
         <div className="space-y-6 hidden lg:block">
           <div className="flex items-center gap-3">
-            <div className="bg-blue-600 p-3 rounded-2xl">
+            <div className="bg-blue-600 p-3 rounded-2xl shadow-md">
               <Activity size={28} className="text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">DentalCare</h1>
-              <p className="text-blue-300 text-sm">Clinic Management System</p>
+              <h1 className="text-2xl font-bold text-slate-900">DentalCare</h1>
+              <p className="text-blue-600 text-sm font-medium">Clinic Management System</p>
             </div>
           </div>
-          <h2 className="text-3xl font-bold text-white leading-snug">
+          <h2 className="text-3xl font-bold text-slate-800 leading-snug">
             Your smile,<br />our priority. 🦷
           </h2>
-          <p className="text-slate-400 leading-relaxed">
+          <p className="text-slate-600 leading-relaxed">
             Create your account and join our dental care platform for a seamless clinic experience.
           </p>
           <ul className="space-y-3">
             {features.map(f => (
-              <li key={f} className="flex items-center gap-3 text-slate-300 text-sm">
-                <CheckCircle size={18} className="text-emerald-400 flex-shrink-0" />
+              <li key={f} className="flex items-center gap-3 text-slate-700 text-sm">
+                <CheckCircle size={18} className="text-emerald-500 flex-shrink-0" />
                 {f}
               </li>
             ))}
           </ul>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-600 text-sm">
             Already have an account?{' '}
-            <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold hover:underline">
+            <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold hover:underline">
               Sign in here
             </Link>
           </p>
