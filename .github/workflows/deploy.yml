@@ -36,7 +36,7 @@ jobs:
       - name: Build the frontend
         run: npm run build
         env:
-          VITE_API_URL: 'https://dental-clinic-management-system.onrender.com/api' # Update this if Render URL is different
+          VITE_API_URL: 'https://some-hounds-dress.loca.lt/api' # Temporary backend URL via localtunnel
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
