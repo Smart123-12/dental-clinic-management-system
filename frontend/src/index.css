@@ -1,30 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap');
 @import "tailwindcss";
 
-/* ── Animations ── */
+/* ══════════════════════════════════════
+   KEYFRAME ANIMATIONS
+══════════════════════════════════════ */
 @keyframes slide-in {
   from { opacity: 0; transform: translateX(40px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes spin-in {
-  from { opacity: 0; transform: scale(0.85); }
-  to   { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.85) rotate(-5deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(59,130,246,0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(59,130,246,0); }
+  100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+}
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.animate-slide-in  { animation: slide-in  0.3s cubic-bezier(0.16,1,0.3,1); }
-.animate-fade-in   { animation: fade-in   0.3s cubic-bezier(0.16,1,0.3,1); }
-.animate-fade-up   { animation: fade-up   0.4s cubic-bezier(0.16,1,0.3,1); }
-.animate-spin-in   { animation: spin-in   0.25s ease; }
+.animate-slide-in  { animation: slide-in  0.35s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-fade-in   { animation: fade-in   0.3s  cubic-bezier(0.16,1,0.3,1) both; }
+.animate-fade-up   { animation: fade-up   0.45s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-spin-in   { animation: spin-in   0.3s  ease both; }
+.animate-float     { animation: float     3s    ease-in-out infinite; }
 
-/* ── Base ── */
+/* Staggered animation delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+/* ══════════════════════════════════════
+   BASE
+══════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
@@ -36,46 +65,221 @@ body {
   color: #0f172a;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root { width: 100%; height: 100%; }
 
-/* ── Card utility ── */
+/* ══════════════════════════════════════
+   PREMIUM CARD
+══════════════════════════════════════ */
 .card {
   background: #ffffff;
   border-radius: 1rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 8px 24px rgba(0,0,0,.07);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card:hover {
+  box-shadow: 0 4px 6px rgba(0,0,0,.05), 0 16px 32px rgba(0,0,0,.1);
 }
 
-/* ── Custom scrollbar ── */
+/* ══════════════════════════════════════
+   GLASSMORPHISM
+══════════════════════════════════════ */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ══════════════════════════════════════
+   GRADIENT TEXT
+══════════════════════════════════════ */
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ══════════════════════════════════════
+   ANIMATED BACKGROUND
+══════════════════════════════════════ */
+.bg-animated {
+  background: linear-gradient(-45deg, #e0f2fe, #ede9fe, #ecfdf5, #fef3c7);
+  background-size: 400% 400%;
+  animation: gradient-shift 12s ease infinite;
+}
+
+/* ══════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════ */
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(59,130,246,0.4);
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 6px 20px rgba(59,130,246,0.5);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(59,130,246,0.4);
+}
+
+/* ══════════════════════════════════════
+   STAT CARDS
+══════════════════════════════════════ */
+.stat-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.1);
+  border-color: #bfdbfe;
+}
+.stat-card:hover::before { opacity: 1; }
+
+/* ══════════════════════════════════════
+   TABLE
+══════════════════════════════════════ */
+table { border-collapse: collapse; width: 100%; }
+
+.table-row-hover {
+  transition: background-color 0.15s ease;
+}
+.table-row-hover:hover {
+  background-color: #f8fafc;
+}
+
+/* ══════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════ */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 99px;
+  transition: background 0.2s;
+}
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-/* ── Focus ring ── */
+/* ══════════════════════════════════════
+   FOCUS RING
+══════════════════════════════════════ */
 :focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
+  border-radius: 4px;
 }
 
-/* ── Smooth transitions on interactive elements ── */
-button, a, input, select, textarea {
-  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
-  transition-duration: 150ms;
-  transition-timing-function: ease;
+/* ══════════════════════════════════════
+   INPUTS
+══════════════════════════════════════ */
+input, select, textarea {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
 }
 
-/* ── Table ── */
-table { border-collapse: collapse; width: 100%; }
-
-/* ── Modal backdrop ── */
-.modal-backdrop {
-  animation: fade-in 0.2s ease;
-}
-
-/* ── Sidebar active glow ── */
+/* ══════════════════════════════════════
+   SIDEBAR ACTIVE
+══════════════════════════════════════ */
 .sidebar-active {
-  background: rgba(255,255,255,0.12);
-  box-shadow: inset 3px 0 0 #fff;
+  background: rgba(255,255,255,0.15) !important;
+  box-shadow: inset 3px 0 0 rgba(255,255,255,0.9);
+}
+
+/* ══════════════════════════════════════
+   BADGE PILL
+══════════════════════════════════════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.02em;
+}
+
+/* ══════════════════════════════════════
+   DEMO CARD HOVER
+══════════════════════════════════════ */
+.demo-card {
+  transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+}
+.demo-card:hover {
+  transform: translateX(4px);
+}
+
+/* ══════════════════════════════════════
+   LOGIN PAGE ORBS
+══════════════════════════════════════ */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+.orb-blue  { background: radial-gradient(circle, #3b82f6, #60a5fa); }
+.orb-teal  { background: radial-gradient(circle, #14b8a6, #5eead4); animation-delay: -2s; }
+.orb-violet{ background: radial-gradient(circle, #8b5cf6, #c4b5fd); animation-delay: -4s; }
+
+/* ══════════════════════════════════════
+   MODAL
+══════════════════════════════════════ */
+.modal-backdrop {
+  animation: fade-in 0.2s ease both;
+}
+.modal-content {
+  animation: spin-in 0.3s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* ══════════════════════════════════════
+   TRANSITIONS
+══════════════════════════════════════ */
+button, a {
+  transition: all 0.15s ease;
+}
+button:active:not(:disabled) {
+  transform: scale(0.98);
 }

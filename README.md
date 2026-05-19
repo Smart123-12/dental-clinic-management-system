@@ -1,53 +1,59 @@
 <div align="center">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
-  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" />
-  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
-  <img src="https://img.shields.io/badge/GitHub_Pages-222222?style=for-the-badge&logo=github&logoColor=white" />
+
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+<img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+<img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+<img src="https://img.shields.io/badge/GitHub_Pages-222222?style=for-the-badge&logo=github&logoColor=white" />
+<img src="https://img.shields.io/badge/No_Backend-Offline_Ready-4EA94B?style=for-the-badge" />
+
+<br/><br/>
+
+<h1>🦷 DentalCare — Clinic Management System</h1>
+
+<p><b>A modern, fully offline React web app to manage a dental clinic — patients, doctors, appointments, and billing — all in one place. No backend or server required!</b></p>
+
+<a href="https://smart123-12.github.io/dental-clinic-management-system/" target="_blank">
+  <img src="https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-blue?style=for-the-badge" />
+</a>
+
 </div>
 
-<br/>
-
-<div align="center">
-  <h1>🦷 DentalCare - Clinic Management System</h1>
-  <p><b>A full-stack, responsive web application to manage a dental clinic — patients, doctors, appointments, and billing — all in one place.</b></p>
-
-  <a href="https://smart123-12.github.io/dental-clinic-management-system/" target="_blank">
-    <img src="https://img.shields.io/badge/🚀_Live_Demo-GitHub_Pages-222222?style=for-the-badge" />
-  </a>
-</div>
+---
 
 ## 🔐 Demo Login Credentials
 
-> ✅ These users are **auto-created** when the server starts for the first time on an empty database. No manual setup needed!
+> ✅ Click any demo card on the login page to **instantly sign in** — no registration needed!
 
 | Role | Email | Password |
 |------|-------|----------|
-| 🛡️ **Admin** | `admin@dentalcare.com` | `Admin@123` |
-| 🩺 **Doctor 1** (Orthodontist) | `doctor@dentalcare.com` | `Doctor@123` |
-| 🩺 **Doctor 2** (Endodontist) | `doctor2@dentalcare.com` | `Doctor@123` |
-| 👤 **Patient** | `patient@dentalcare.com` | `Patient@123` |
+| 🛡️ **Admin** | `admin@test.com` | `123456` |
+| 🩺 **Doctor** | `doctor@test.com` | `123456` |
+| 👤 **Patient** | `customer@test.com` | `123456` |
 
+---
 
+## ✨ Features
 
 ### 👤 Patient (Customer)
-- Signup / Login
-- Browse available dentists with charges
+- Signup / Login with any email
+- Browse available dentists with specialization & charges
 - Book appointment with date, time & problem type
-- Cancel bookings
-- View full appointment history with status and total bill
+- Cancel upcoming bookings
+- View full appointment history with status & total bill
 
 ### 🩺 Doctor
 - Login to personal dashboard
-- View all assigned appointments
-- Approve or reject appointment requests
-- Complete a visit with treatment notes and charges
+- View all assigned appointments (filter by status)
+- Approve, reject or reschedule appointment requests
+- Mark visits complete with treatment notes and charges
+- Manage available time slots
 
 ### 🛡️ Admin
-- Dashboard with live stats (patients, doctors, revenue, appointments)
-- View all registered users
-- View all appointments across the system
+- Live stats dashboard (patients, doctors, revenue, appointments)
+- View & manage all registered users
+- Add new users with any role
+- View & manage all appointments across the system
+- Approve / cancel any appointment
 
 ---
 
@@ -55,55 +61,47 @@
 
 | Layer | Technology |
 |---|---|
-| **Frontend** | React 18, Vite, Tailwind CSS v4 |
-| **Backend** | Node.js, Express.js |
-| **Database** | MongoDB Atlas (Free Tier) |
-| **Auth** | JWT (JSON Web Tokens) + bcryptjs |
-| **Frontend Hosting** | GitHub Pages (via GitHub Actions) |
-| **Backend Hosting** | Render (Free Tier) |
+| **Frontend** | React 19, Vite 8, Tailwind CSS v4 |
+| **Routing** | React Router DOM v7 (HashRouter) |
+| **Icons** | Lucide React |
+| **Data** | Offline mock API (no backend, no database) |
+| **Hosting** | GitHub Pages via GitHub Actions CI/CD |
 
 ---
 
 ## 🚀 Live Deployment
 
-> 🌐 **Frontend**: [https://Smart123-12.github.io/dental-clinic-management-system/](https://Smart123-12.github.io/dental-clinic-management-system/)
+> 🌐 **Live Site**: [https://smart123-12.github.io/dental-clinic-management-system/](https://smart123-12.github.io/dental-clinic-management-system/)
+
+Deployed automatically on every push to `main` via GitHub Actions → GitHub Pages.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-dental-clinic/
-├── backend/                  # Node.js + Express API
-│   ├── middleware/
-│   │   └── auth.js           # JWT Auth & Role-based Access
-│   ├── models/
-│   │   ├── User.js           # User schema (customer/doctor/admin)
-│   │   └── Appointment.js    # Appointment schema
-│   ├── routes/
-│   │   ├── auth.js           # Register & Login routes
-│   │   ├── appointments.js   # Book, view, update, cancel
-│   │   └── users.js          # Doctors list, manage users
-│   ├── server.js             # Main entry point
-│   └── package.json
+dental-clinic-management-system/
 │
-└── frontend/                 # React + Vite + Tailwind
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # GitHub Actions — auto deploy to Pages
+│
+└── frontend/                   # React + Vite + Tailwind CSS
     ├── public/
-    ├── src/
-    │   ├── components/
-    │   │   └── Navbar.jsx
-    │   ├── pages/
-    │   │   ├── Login.jsx
-    │   │   ├── Signup.jsx
-    │   │   ├── CustomerDashboard.jsx
-    │   │   ├── DoctorDashboard.jsx
-    │   │   └── AdminDashboard.jsx
-    │   ├── services/
-    │   │   └── api.js        # Axios instance
-    │   ├── App.jsx
-    │   └── index.css
-    ├── netlify.toml
-    └── package.json
+    └── src/
+        ├── components/
+        │   ├── Navbar.jsx       # Top navigation bar
+        │   └── Sidebar.jsx      # Role-based sidebar
+        ├── pages/
+        │   ├── Login.jsx        # Login + demo quick-cards
+        │   ├── Signup.jsx       # Registration page
+        │   ├── CustomerDashboard.jsx
+        │   ├── DoctorDashboard.jsx
+        │   └── AdminDashboard.jsx
+        ├── services/
+        │   └── api.js           # Offline mock API (no backend!)
+        ├── App.jsx              # Routes (HashRouter)
+        └── index.css            # Global styles & animations
 ```
 
 ---
@@ -112,89 +110,31 @@ dental-clinic/
 
 ### Prerequisites
 - Node.js v18+
-- MongoDB Atlas account (free) or local MongoDB
 
 ### 1. Clone the Repo
 ```bash
-git clone https://github.com/Smart123-12/dental-clinic.git
-cd dental-clinic
+git clone https://github.com/Smart123-12/dental-clinic-management-system.git
+cd dental-clinic-management-system/frontend
 ```
 
-### 2. Setup Backend
+### 2. Install & Run
 ```bash
-cd backend
 npm install
-```
-
-Create a `.env` file inside `backend/`:
-```env
-MONGO_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=your_super_secret_key
-PORT=5000
-```
-
-Start the backend:
-```bash
-node server.js
-```
-
-### 3. Setup Frontend
-```bash
-cd frontend
-npm install
-```
-
-Create a `.env` file inside `frontend/`:
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-
-Start the frontend:
-```bash
 npm run dev
 ```
 
----
-
-## 🌐 Deployment Guide
-
-### Backend → Render (Free)
-1. Go to [render.com](https://render.com) → New Web Service
-2. Connect your GitHub repo (`Smart123-12/dental-clinic`)
-3. Settings:
-   - **Root Directory**: `backend`
-   - **Build Command**: `npm install`
-   - **Start Command**: `node server.js`
-4. Add **Environment Variables**:
-   - `MONGO_URI` → MongoDB Atlas URI
-   - `JWT_SECRET` → any secret string
-
-### Frontend → GitHub Pages
-The frontend is automatically deployed to GitHub Pages via GitHub Actions whenever changes are pushed to the `main` branch.
+Open [http://localhost:5173](http://localhost:5173) — done! No `.env`, no backend, no database needed. 🎉
 
 ---
 
-## 🔐 Default Test Users
+## 🌐 How Deployment Works
 
-To test the app, register using the Signup page and choose a role:
-- **Patient** → Select "Patient" during signup
-- **Doctor** → Select "Doctor" during signup
-- **Admin** → Must be created manually in MongoDB with `role: "admin"`
-
----
-
-## 📄 API Endpoints
-
-| Method | Endpoint | Role | Description |
-|---|---|---|---|
-| POST | `/api/auth/register` | Public | Register new user |
-| POST | `/api/auth/login` | Public | Login |
-| GET | `/api/users/doctors` | Public | List all doctors |
-| GET | `/api/users` | Admin | List all users |
-| GET | `/api/appointments` | Auth | Get appointments |
-| POST | `/api/appointments` | Customer | Book appointment |
-| PUT | `/api/appointments/:id/status` | Doctor/Admin | Update status |
-| DELETE | `/api/appointments/:id` | Customer | Cancel appointment |
+1. Push any change to `main` branch
+2. GitHub Actions automatically:
+   - Installs Node.js 20
+   - Runs `npm run build` inside `./frontend`
+   - Deploys the `dist/` folder to `gh-pages` branch
+3. GitHub Pages serves the site from `gh-pages`
 
 ---
 

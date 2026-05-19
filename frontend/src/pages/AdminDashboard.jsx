@@ -97,8 +97,9 @@ export default function AdminDashboard() {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center h-64">
-      <div className="animate-spin rounded-full h-10 w-10 border-4 border-blue-600 border-t-transparent" />
+    <div className="flex flex-col items-center justify-center h-64 gap-4">
+      <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-100 border-t-blue-600" />
+      <p className="text-slate-400 text-sm font-medium animate-pulse">Loading dashboard...</p>
     </div>
   );
 
@@ -116,23 +117,31 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Admin Dashboard</h1>
-        <p className="text-slate-500 text-sm mt-1">Manage your clinic system</p>
+    <div className="animate-fade-up">
+      <div className="mb-7 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Admin Dashboard</h1>
+          <p className="text-slate-500 text-sm mt-1">Welcome back — here's your clinic overview</p>
+        </div>
+        <div className="hidden sm:flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1.5 rounded-full text-xs font-bold">
+          <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+          System Online
+        </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-slate-200 rounded-xl p-1 w-fit mb-6">
+      <div className="flex gap-1 bg-slate-100 rounded-xl p-1 w-fit mb-7 border border-slate-200">
         {tabs.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             onClick={() => setTab(id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              tab === id ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+              tab === id
+                ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
+                : 'text-slate-500 hover:text-slate-800 hover:bg-white/50'
             }`}
           >
-            <Icon size={15} /> {label}
+            <Icon size={14} /> {label}
           </button>
         ))}
       </div>
@@ -143,19 +152,19 @@ export default function AdminDashboard() {
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'Total Patients', value: totalPatients, icon: Users, color: 'blue' },
-              { label: 'Total Doctors', value: totalDoctors, icon: Stethoscope, color: 'emerald' },
-              { label: 'Total Revenue', value: `₹${totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'violet' },
-              { label: 'Pending Appts', value: pendingCount, icon: Calendar, color: 'orange' },
-            ].map(({ label, value, icon: Icon, color }) => (
-              <div key={label} className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 flex items-center gap-4">
-                <div className={`bg-${color}-100 p-3 rounded-xl text-${color}-600`}>
-                  <Icon size={22} />
+              { label: 'Total Patients', value: totalPatients, icon: Users, gradient: 'from-blue-500 to-cyan-500', bg: 'bg-blue-50', text: 'text-blue-600' },
+              { label: 'Total Doctors',  value: totalDoctors,  icon: Stethoscope, gradient: 'from-emerald-500 to-teal-500', bg: 'bg-emerald-50', text: 'text-emerald-600' },
+              { label: 'Total Revenue',  value: `₹${totalRevenue.toLocaleString()}`, icon: DollarSign, gradient: 'from-violet-500 to-purple-500', bg: 'bg-violet-50', text: 'text-violet-600' },
+              { label: 'Pending Appts', value: pendingCount, icon: Calendar, gradient: 'from-orange-400 to-amber-500', bg: 'bg-orange-50', text: 'text-orange-600' },
+            ].map(({ label, value, icon: Icon, gradient, bg, text }, i) => (
+              <div key={label} className={`stat-card animate-fade-up delay-${(i+1)*100}`}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`bg-gradient-to-br ${gradient} p-2.5 rounded-xl shadow-sm`}>
+                    <Icon size={20} className="text-white" />
+                  </div>
+                  <p className="text-xs text-slate-500 font-semibold uppercase tracking-wide">{label}</p>
                 </div>
-                <div>
-                  <p className="text-xs text-slate-500 font-medium">{label}</p>
-                  <p className="text-2xl font-bold text-slate-900">{value}</p>
-                </div>
+                <p className="text-3xl font-black text-slate-900">{value}</p>
               </div>
             ))}
           </div>
