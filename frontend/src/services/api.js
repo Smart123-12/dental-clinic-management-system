@@ -1,152 +1,182 @@
-import axios from 'axios';
+// =====================================================
+// OFFLINE MOCK API — NO BACKEND REQUIRED
+// Backend completely removed. Everything works locally.
+// =====================================================
 
-// --- OFFLINE MOCK BACKEND ---
-// The user requested to remove the backend requirement and fix the login error.
-// This mock API entirely replaces the real backend connection, allowing the app
-// to function fully offline directly from the browser using mock memory state.
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-const api = {};
-
-// Mock Data
+// ── Seed Data ─────────────────────────────────────
 let mockUsers = [
-  { _id: '1', name: 'Admin User', email: 'admin@test.com', role: 'admin' },
-  { _id: '2', name: 'Dr. Smith', email: 'doctor@test.com', role: 'doctor', specialization: 'Orthodontist', chargePerVisit: 500, availableSlots: ['09:00 AM', '10:00 AM', '02:00 PM'] },
-  { _id: '3', name: 'John Doe', email: 'customer@test.com', role: 'customer' }
+  { _id: 'u1', name: 'Admin User',  email: 'admin@test.com',    password: '123456', role: 'admin' },
+  {
+    _id: 'u2', name: 'Dr. Smith', email: 'doctor@test.com', password: '123456',
+    role: 'doctor', specialization: 'Orthodontist', chargePerVisit: 500,
+    availableSlots: ['09:00 AM', '10:00 AM', '02:00 PM'],
+  },
+  { _id: 'u3', name: 'John Doe', email: 'customer@test.com', password: '123456', role: 'customer' },
 ];
 
 let mockAppointments = [
-  { _id: '101', patient: mockUsers[2], doctor: mockUsers[1], date: new Date().toISOString(), timeSlot: '10:00 AM', problem: 'Tooth Pain', status: 'pending' }
+  {
+    _id: 'a1',
+    patient:  { _id: 'u3', name: 'John Doe',   email: 'customer@test.com', role: 'customer' },
+    doctor:   { _id: 'u2', name: 'Dr. Smith',  specialization: 'Orthodontist', chargePerVisit: 500 },
+    date: new Date().toISOString(),
+    timeSlot: '10:00 AM',
+    problem: 'Tooth Pain',
+    status: 'pending',
+    charges: 0,
+  },
 ];
 
-const delay = (ms) => new Promise(res => setTimeout(res, ms));
+// ── Helpers ───────────────────────────────────────
+const me = () => JSON.parse(localStorage.getItem('user') || '{}');
 
-api.post = async (url, data) => {
-  await delay(400); // simulate network delay
-  
+const throwMsg = (msg) => {
+  const err = new Error(msg);
+  err.response = { data: { message: msg } };
+  throw err;
+};
+
+// ── POST ──────────────────────────────────────────
+async function post(url, data = {}) {
+  await delay(400);
+
+  // LOGIN
   if (url === '/auth/login') {
-    const user = mockUsers.find(u => u.email === data.email);
-    if (!user) {
-      const err = new Error('Invalid email or password');
-      err.response = { data: { message: 'Invalid email or password (Hint: use demo users)' } };
-      throw err;
-    }
-    return { data: { token: 'mock-token', ...user } };
+    const user = mockUsers.find((u) => u.email === data.email);
+    if (!user) throwMsg('Invalid email or password. Use demo cards to login!');
+    const { password: _p, ...safe } = user;
+    return { data: { token: 'mock-jwt-token', ...safe } };
   }
-  
+
+  // REGISTER
   if (url === '/auth/register') {
-    const exists = mockUsers.find(u => u.email === data.email);
-    if (exists) {
-      const err = new Error('Email already registered');
-      err.response = { data: { message: 'Email already registered' } };
-      throw err;
-    }
-    const newUser = { _id: Date.now().toString(), ...data };
+    if (mockUsers.find((u) => u.email === data.email))
+      throwMsg('Email already registered. Please login instead.');
+    const newUser = { _id: 'u' + Date.now(), ...data };
     mockUsers.push(newUser);
-    return { data: { token: 'mock-token', ...newUser } };
+    const { password: _p, ...safe } = newUser;
+    return { data: { token: 'mock-jwt-token', ...safe } };
   }
-  
+
+  // OPENCODE AUTH
   if (url === '/auth/opencode') {
-    return { data: { token: 'mock-token', ...mockUsers[2] } };
+    const { password: _p, ...safe } = mockUsers[2];
+    return { data: { token: 'mock-jwt-token', ...safe } };
   }
-  
+
+  // CREATE USER (admin)
   if (url === '/users') {
-    const newUser = { _id: Date.now().toString(), ...data };
+    const newUser = { _id: 'u' + Date.now(), ...data };
     mockUsers.push(newUser);
     return { data: newUser };
   }
-  
+
+  // BOOK APPOINTMENT
   if (url === '/appointments') {
-    const doc = mockUsers.find(u => u._id === data.doctorId);
-    const currentUser = JSON.parse(localStorage.getItem('user'));
-    const newAppt = { 
-      _id: Date.now().toString(), 
-      patient: currentUser, 
-      doctor: doc, 
-      status: 'pending', 
-      ...data 
+    const doc = mockUsers.find((u) => u._id === data.doctorId);
+    const currentUser = me();
+    const newAppt = {
+      _id: 'a' + Date.now(),
+      patient: { _id: currentUser._id, name: currentUser.name, email: currentUser.email },
+      doctor:  doc ? { _id: doc._id, name: doc.name, specialization: doc.specialization, chargePerVisit: doc.chargePerVisit } : null,
+      status: 'pending',
+      charges: 0,
+      date: data.date,
+      timeSlot: data.timeSlot,
+      problem: data.problem,
     };
     mockAppointments.push(newAppt);
     return { data: newAppt };
   }
-  
+
   return { data: {} };
-};
+}
 
-api.get = async (url) => {
+// ── GET ───────────────────────────────────────────
+async function get(url) {
   await delay(300);
-  
-  if (url === '/users') return { data: mockUsers };
-  
-  if (url === '/users/doctors') return { data: mockUsers.filter(u => u.role === 'doctor') };
-  
-  if (url === '/appointments') {
-     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-     let appts = [...mockAppointments];
-     // Filter based on role if needed (customer only sees theirs, doctor theirs, admin sees all)
-     if (currentUser.role === 'customer') {
-       appts = appts.filter(a => a.patient?._id === currentUser._id);
-     } else if (currentUser.role === 'doctor') {
-       appts = appts.filter(a => a.doctor?._id === currentUser._id);
-     }
-     return { data: appts };
-  }
-  
+
+  if (url === '/users')
+    return { data: mockUsers.map(({ password: _p, ...u }) => u) };
+
+  if (url === '/users/doctors')
+    return { data: mockUsers.filter((u) => u.role === 'doctor').map(({ password: _p, ...u }) => u) };
+
   if (url === '/users/me') {
-     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-     const user = mockUsers.find(u => u._id === currentUser._id) || currentUser;
-     return { data: user };
+    const currentUser = me();
+    const user = mockUsers.find((u) => u._id === currentUser._id) || currentUser;
+    const { password: _p, ...safe } = user;
+    return { data: safe };
   }
-  
-  return { data: [] };
-};
 
-api.put = async (url, data) => {
+  if (url === '/appointments') {
+    const currentUser = me();
+    let appts = [...mockAppointments];
+    if (currentUser.role === 'customer')
+      appts = appts.filter((a) => a.patient?._id === currentUser._id);
+    else if (currentUser.role === 'doctor')
+      appts = appts.filter((a) => a.doctor?._id === currentUser._id);
+    return { data: appts };
+  }
+
+  return { data: [] };
+}
+
+// ── PUT ───────────────────────────────────────────
+async function put(url, data = {}) {
   await delay(300);
-  
-  if (url.includes('/status')) {
-    const id = url.split('/')[2];
-    const appt = mockAppointments.find(a => a._id === id);
-    if (appt) {
-       Object.assign(appt, data);
-    }
+
+  // UPDATE APPOINTMENT STATUS  e.g. /appointments/a1/status
+  if (url.includes('/appointments/') && url.includes('/status')) {
+    const parts = url.split('/');
+    const id = parts[2];
+    const appt = mockAppointments.find((a) => a._id === id);
+    if (appt) Object.assign(appt, data);
     return { data: appt };
   }
-  
+
+  // UPDATE DOCTOR SLOTS
   if (url === '/users/myslots/update') {
-    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-    const user = mockUsers.find(u => u._id === currentUser._id);
+    const currentUser = me();
+    const user = mockUsers.find((u) => u._id === currentUser._id);
     if (user) {
-       user.availableSlots = data.slots;
-       localStorage.setItem('user', JSON.stringify(user));
+      user.availableSlots = data.slots;
+      localStorage.setItem('user', JSON.stringify({ ...currentUser, availableSlots: data.slots }));
     }
     return { data: user };
   }
-  
+
   return { data: {} };
-};
+}
 
-api.delete = async (url) => {
+// ── DELETE ────────────────────────────────────────
+async function del(url) {
   await delay(300);
-  
-  if (url.startsWith('/users/')) {
-     const id = url.split('/')[2];
-     mockUsers = mockUsers.filter(u => u._id !== id);
-     return { data: { success: true } };
-  }
-  
-  if (url.startsWith('/appointments/')) {
-     const id = url.split('/')[2];
-     mockAppointments = mockAppointments.filter(a => a._id !== id);
-     return { data: { success: true } };
-  }
-  
-  return { data: { success: true } };
-};
 
-// Dummy interceptors so no code crashes if it tries to attach headers
-api.interceptors = {
-  request: { use: () => {} },
-  response: { use: () => {} }
+  if (url.startsWith('/users/')) {
+    const id = url.split('/')[2];
+    mockUsers = mockUsers.filter((u) => u._id !== id);
+    return { data: { success: true } };
+  }
+
+  if (url.startsWith('/appointments/')) {
+    const id = url.split('/')[2];
+    mockAppointments = mockAppointments.filter((a) => a._id !== id);
+    return { data: { success: true } };
+  }
+
+  return { data: { success: true } };
+}
+
+// ── Export (same shape as axios instance) ─────────
+const api = {
+  post,
+  get,
+  put,
+  delete: del,
+  interceptors: { request: { use: () => {} }, response: { use: () => {} } },
 };
 
 export default api;
