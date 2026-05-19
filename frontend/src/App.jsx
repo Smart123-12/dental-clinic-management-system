@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -32,7 +32,7 @@ function App() {
   const user = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <HashRouter>
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={!user ? <Login /> : <Navigate to={`/${user.role}`} />} />
@@ -74,7 +74,7 @@ function App() {
           element={<Navigate to={user ? `/${user.role}` : '/login'} />}
         />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

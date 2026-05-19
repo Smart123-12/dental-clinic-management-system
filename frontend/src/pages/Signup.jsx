@@ -23,7 +23,7 @@ export default function Signup() {
       const { data } = await api.post('/auth/register', formData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data));
-      window.location.href = `/${data.role}`;
+      navigate(`/${data.role}`);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Try again.');
     } finally {

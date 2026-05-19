@@ -49,7 +49,6 @@ export default function Sidebar({ open, onClose }) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     navigate('/login');
-    window.location.reload();
   };
 
   return (

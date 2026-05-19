@@ -9,7 +9,6 @@ export default function Navbar({ onMenuClick }) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     navigate('/login');
-    window.location.reload();
   };
 
   const roleLabel = {
